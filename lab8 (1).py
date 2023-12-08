@@ -90,6 +90,109 @@ else:
     print("The features are independent (fail to reject null hypothesis)")
 
 
+# In[13]:
+
+
+import pandas as pd
+from sklearn.naive_bayes import GaussianNB
+from sklearn.preprocessing import LabelEncoder
+
+# Your data
+data = {
+    'age': ['<=30', '<=30', '31…40', '>40', '>40', '>40', '31…40', '<=30', '<=30', '>40', '<=30', '31…40', '31…40', '>40'],
+    'income': ['high', 'high', 'high', 'medium', 'low', 'low', 'low', 'medium', 'low', 'medium', 'medium', 'medium', 'high', 'medium'],
+    'student': ['no', 'no', 'no', 'no', 'yes', 'yes', 'yes', 'no', 'yes', 'yes', 'yes', 'no', 'yes', 'no'],
+    'credit_rating': ['fair', 'excellent', 'fair', 'fair', 'fair', 'excellent', 'excellent', 'fair', 'fair', 'fair', 'fair', 'excellent', 'fair', 'excellent'],
+    'buys_computer': ['no', 'no', 'yes', 'yes', 'yes', 'no', 'yes', 'no', 'yes', 'yes', 'yes', 'yes', 'yes', 'no']
+}
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+# Convert categorical variables to numerical using Label Encoding
+le = LabelEncoder()
+df_encoded = df.apply(le.fit_transform)
+
+# Separate features and target labels
+Tr_X = df_encoded.drop('buys_computer', axis=1)
+Tr_y = df_encoded['buys_computer']
+
+# Build Naïve-Bayes (NB) classifier
+model = GaussianNB()
+model.fit(Tr_X, Tr_y)
+
+# Test the classifier on new data if needed
+# For example:
+# new_data = pd.DataFrame({'age': ['>40'], 'income': ['medium'], 'student': ['yes'], 'credit_rating': ['fair']})
+# new_data_encoded = new_data.apply(le.transform)
+# prediction = model.predict(new_data_encoded)
+# print(prediction)
+
+
+# In[15]:
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import mean_squared_error
+
+
+
+# Create a DataFrame
+df=pd.read_excel('Custom_CNN_Features1.xlsx')
+
+# Separate features and target labels
+X = df.drop(['Filename', 'Label'], axis=1)
+y = df['Label']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Build Naïve-Bayes (NB) regression model
+model = GaussianNB()
+model.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+print(f'Mean Squared Error: {mse}')
+
+
+# In[18]:
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import mean_squared_error
+
+
+
+# Create a DataFrame
+df=pd.read_excel('modified_dataset.xlsx')
+
+# Separate features and target labels
+X = df.drop(['ImageName', 'Label'], axis=1)
+y = df['Label']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Build Naïve-Bayes (NB) regression model
+model = GaussianNB()
+model.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+print(f'Mean Squared Error: {mse}')
+
+
 # In[ ]:
 
 
